@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Input</title>
+</head>
+<body>
+<h2>Enter Token:</h2>
+<input type="text" id="tokenInput" placeholder="Enter your token">
+<button onclick="sendToken()">Submit</button>
+
+<script>
+        function sendToken() {
+            // Get the token from the input field
+            const token = document.getElementById('tokenInput').value;
+
+            // Make a POST request to /api/greeting with the token in the header
+            fetch('/api/greeting', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log('Response from /api/greeting:', data);
+                alert(data);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+
+
+
+</script>
+</body>
+</html>
